@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&family=Signika+Negative:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+        <h1>🍅the Pomodoro Technique🍅</h1>
+    </div>
+    <div class="main">
+        <input class="taskName" type="text" id="task" placeholder="name the task ...">
+
+        <div class="minofwork timer" id="work-timer">
+            <div class="timer-value" id="work-minutes">0</div>
+            <button class="controlButton up" id="work-increase">▲</button>
+            <button class="controlButton down" id="work-decrease">▼</button>
+        </div>
+
+        <div class="minofrest timer" id="rest-timer">
+            <div class="timer-value" id="rest-minutes">0</div>
+            <button class="controlButton up" id="rest-increase">▲</button>
+            <button class="controlButton down" id="rest-decrease">▼</button>
+        </div>
+
+        <div class="control">
+            <button class="startButton" id="start">Start</button>
+        </div>
+        
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
