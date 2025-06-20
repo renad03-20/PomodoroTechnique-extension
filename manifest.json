@@ -4,11 +4,17 @@
     "version": "1.0",
     "description": "A simple Pomodoro timer to help you manage your time effectively.",
     "action":{
-        "default_popup": "popup.htnl",
+        "default_popup": "popup.html",
         "default_icon": {
             "16": "icons/icon16.png",
             "48": "icons/icon48.png",
             "128": "icons/icon128.png"
         }
-    }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["sounds/work.mp3", "sounds/break.mp3"],
+            "matches": ["<all_urls>"]
+        }
+    ]
 }
