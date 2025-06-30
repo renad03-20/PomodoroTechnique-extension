@@ -1,48 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pomodoro Timer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&family=Signika+Negative:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <div id="setup-screen">
-          <div class="header">
-        <h1>🍅the Pomodoro Technique🍅</h1>
-        <noscript>The Pomodoro Technique</noscript>
-    </div>
-    <div class="main">
-        <input class="taskName" type="text" id="task" placeholder="name the task ...">
+      <div class="header">
+        <h1>🍅 Pomodoro Timer 🍅</h1>
+        <noscript>Please enable JavaScript to use this extension</noscript>
+      </div>
+      <div class="main">
+        <div id="task-list">
+          <input class="task-input" type="text" placeholder="Task name..." aria-label="Task name">
+        </div>
+        <button id="add-task" class="add-task-btn" aria-label="Add task">+</button>
 
-        <div class="minofwork timer" id="work-timer">
-            <div class="timer-value" id="work-minutes">0</div>
-            <button class="controlButton up" id="work-increase">▲</button>
-            <button class="controlButton down" id="work-decrease">▼</button>
+        <div class="timer-group">
+          <h2>Work Duration</h2>
+          <div class="timer-control" id="work-timer">
+            <button class="control-btn decrement" id="work-decrease" aria-label="Decrease work time">▼</button>
+            <div class="timer-value" id="work-minutes">25</div>
+            <button class="control-btn increment" id="work-increase" aria-label="Increase work time">▲</button>
+          </div>
         </div>
 
-        <div class="minofrest timer" id="rest-timer">
-            <div class="timer-value" id="rest-minutes">0</div>
-            <button class="controlButton up" id="rest-increase">▲</button>
-            <button class="controlButton down" id="rest-decrease">▼</button>
+        <div class="timer-group">
+          <h2>Break Duration</h2>
+          <div class="timer-control" id="rest-timer">
+            <button class="control-btn decrement" id="rest-decrease" aria-label="Decrease break time">▼</button>
+            <div class="timer-value" id="rest-minutes">5</div>
+            <button class="control-btn increment" id="rest-increase" aria-label="Increase break time">▲</button>
+          </div>
         </div>
 
-        <div class="control">
-            <button class="startButton" id="start">Start</button>
-        </div>
-    </div>
+        <button class="start-btn" id="start">Start</button>
+      </div>
     </div>
 
-    <div id="timer-screen" class="timer-screen">
-      <h1>🍅lock in🍅</h1>
-      <h2 id="displayTaskName" class="theTaskName"></h2>
-      <h1 id="timer">00:00</h1>
-      <button id="editBtn">Back</button>
+    <div id="timer-screen" class="timer-screen hidden">
+      <h1 id="timer-status">🍅 Focus Time 🍅</h1>
+      <h2 id="current-task" class="task-display"></h2>
+      <div id="timer-display" class="time-display">25:00</div>
+      <div class="timer-actions">
+        <button id="pause-btn" class="action-btn">Pause</button>
+        <button id="edit-btn" class="action-btn">Back</button>
+      </div>
     </div>
   </div>
-  <script src="popup.html"></script>
+  <script src="popup.js" type="module"></script>
 </body>
 </html>
-

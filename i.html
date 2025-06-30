@@ -1,4 +1,286 @@
-class PomodoroTimer {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+  --primary-color: #e74c3c;
+  --secondary-color: #2c3e50;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --error-color: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Saira', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  width: 350px;
+  height: 500px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.main {
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Task Input */
+#task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.task-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.task-input:focus {
+  border-color: var(--primary-color);
+}
+
+.add-task-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+/* Timer Controls */
+.timer-group {
+  margin: 20px 0;
+}
+
+.timer-group h2 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--secondary-color);
+}
+
+.timer-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.timer-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  min-width: 40px;
+  text-align: center;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.control-btn:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Buttons */
+.start-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+}
+
+.start-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Timer Screen */
+.timer-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+}
+
+#timer-status {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.task-display {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.time-display {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 20px 0;
+  font-family: monospace;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#pause-btn {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+#pause-btn:hover {
+  background-color: #d35400;
+}
+
+#edit-btn {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+#edit-btn:hover {
+  background-color: #1a252f;
+}
+
+/* Focus states for accessibility */
+button:focus, input:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="setup-screen">
+      <div class="header">
+        <h1>🍅 Pomodoro Timer 🍅</h1>
+        <noscript>Please enable JavaScript to use this extension</noscript>
+      </div>
+      <div class="main">
+        <div id="task-list">
+          <input class="task-input" type="text" placeholder="Task name..." aria-label="Task name">
+        </div>
+        <button id="add-task" class="add-task-btn" aria-label="Add task">+</button>
+
+        <div class="timer-group">
+          <h2>Work Duration</h2>
+          <div class="timer-control" id="work-timer">
+            <button class="control-btn decrement" id="work-decrease" aria-label="Decrease work time">▼</button>
+            <div class="timer-value" id="work-minutes">25</div>
+            <button class="control-btn increment" id="work-increase" aria-label="Increase work time">▲</button>
+          </div>
+        </div>
+
+        <div class="timer-group">
+          <h2>Break Duration</h2>
+          <div class="timer-control" id="rest-timer">
+            <button class="control-btn decrement" id="rest-decrease" aria-label="Decrease break time">▼</button>
+            <div class="timer-value" id="rest-minutes">5</div>
+            <button class="control-btn increment" id="rest-increase" aria-label="Increase break time">▲</button>
+          </div>
+        </div>
+
+        <button class="start-btn" id="start">Start</button>
+      </div>
+    </div>
+
+    <div id="timer-screen" class="timer-screen hidden">
+      <h1 id="timer-status">🍅 Focus Time 🍅</h1>
+      <h2 id="current-task" class="task-display"></h2>
+      <div id="timer-display" class="time-display">25:00</div>
+      <div class="timer-actions">
+        <button id="pause-btn" class="action-btn">Pause</button>
+        <button id="edit-btn" class="action-btn">Back</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    class PomodoroTimer {
   constructor() {
     // Default settings
     this.settings = {
@@ -216,3 +498,6 @@ class PomodoroTimer {
 document.addEventListener('DOMContentLoaded', () => {
   new PomodoroTimer();
 });
+  </script>
+</body>
+</html>
